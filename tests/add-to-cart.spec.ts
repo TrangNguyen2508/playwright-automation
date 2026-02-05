@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { test, expect } from '../base/base-test'
 import { users } from '../data/users'
 import { products } from '../data/products'
@@ -18,3 +19,25 @@ test('Add product to cart', async ({ loginPage, inventoryPage }) => {
     const count = await inventoryPage.getCartCount()
     expect(count).toBe('1')
 })
+=======
+import { test, expect } from '../base/base-test'
+import { users } from '../data/users'
+import { products } from '../data/products'
+
+test('Add product to cart', async ({ loginPage, inventoryPage }) => {
+    await loginPage.login(
+        users.standard.username,
+        users.standard.password
+    )
+
+    // Inventory
+    await inventoryPage.verifyOnInventoryPage()
+
+    // Add product
+    await inventoryPage.addProductToCart(products.backpack)
+
+    // Verify car badge
+    const count = await inventoryPage.getCartCount()
+    expect(count).toBe('1')
+})
+>>>>>>> 0b1fee05cd924de33373d95d48354ead14eb2ea1
