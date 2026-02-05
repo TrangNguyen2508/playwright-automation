@@ -12,12 +12,6 @@ The goal of this project is to demonstrate:
 Target website:  
 👉 https://www.saucedemo.com/
 
-## 🚀 Tech Stack
-- Playwright
-- TypeScript
-- Page Object Model (POM)
-- Node.js
-
 # Playwright Automation Project – SauceDemo
 
 ## 📌 Overview
@@ -88,3 +82,4 @@ npx playwright test --ui
 npx playwright show-report
 
 Author - Trang
+
