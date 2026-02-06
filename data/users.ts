@@ -3,8 +3,8 @@ export const users = {
     username: 'standard_user',
     password: 'secret_sauce'
   },
-  locked: {
-    username: 'locked_out_user',
+  invalid: {
+    username: 'wrong_username',
     password: 'secret_sauce'
   }
 }

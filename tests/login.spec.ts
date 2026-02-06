@@ -3,22 +3,34 @@ import { users } from '../data/users'
 
 test.describe('Login - SauceDemo', () => {
 
-  test('Login successfully', async ({ loginPage, page }) => {
-    await loginPage.login(
-      users.standard.username,
-      users.standard.password
-    )
+  test('Login - user can login with valid account', async ({ loginPage, page }) => {
 
-    await expect(page).toHaveURL(/inventory/)
+    await test.step('User logs in with valid credentials', async () => {
+      await loginPage.login(
+        users.standard.username,
+        users.standard.password
+      )
+    })
+
+    await test.step('User should be redirected to Products page', async () => {
+      await expect(page).toHaveURL(/inventory/)
+    })
+
   })
 
-  test('Login failed', async ({ loginPage }) => {
-    await loginPage.login(
-      users.locked.username,
-      users.standard.password
-    )
+  test('Login - user cannot login with invalid password', async ({ loginPage }) => {
 
-    await expect(loginPage.errorMessage).toBeVisible()
+    await test.step('User logs in with invalid credentials', async () => {
+      await loginPage.login(
+        users.invalid.username,
+        users.standard.password
+      )
+    })
+
+    await test.step('User should see an error message', async () => {
+      await expect(loginPage.errorMessage).toBeVisible()
+    })
+
   })
 })
 
