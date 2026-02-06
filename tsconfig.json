@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {
   "compilerOptions": {
     "target": "esnext",
@@ -10,16 +9,3 @@
   },
   "include": ["tests/**/*.ts", "pages/**/*.ts", "data/**/*.ts"]
 }
-=======
-{
-  "compilerOptions": {
-    "target": "esnext",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "strict": true,
-    "types": ["node", "@playwright/test"],
-    "skipLibCheck": true
-  },
-  "include": ["tests/**/*.ts", "pages/**/*.ts", "data/**/*.ts"]
-}
->>>>>>> 0b1fee05cd924de33373d95d48354ead14eb2ea1
