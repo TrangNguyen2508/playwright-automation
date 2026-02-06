@@ -29,10 +29,7 @@ export default defineConfig({
     // baseURL: 'http://localhost:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-<<<<<<< HEAD
     baseURL: 'https://www.saucedemo.com',
-=======
->>>>>>> 0b1fee05cd924de33373d95d48354ead14eb2ea1
     trace: 'on-first-retry',
     testIdAttribute: 'data-test',
   },
