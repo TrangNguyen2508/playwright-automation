@@ -2,52 +2,85 @@ import { test, expect } from '../base/base-test'
 import { users } from '../data/users'
 import { products } from '../data/products'
 
-test('Cart - user can add product then remove from cart', async ({
-  loginPage,
-  inventoryPage,
-  cartPage
-}) => {
-  const productName = products.backpack
+test.describe('Cart - add and remove products', () => {
 
-  await test.step('User logs in with valid credentials', async () => {
-    // Login (goto đã nằm trong login())
-    await loginPage.login(
-      users.standard.username,
-      users.standard.password
-    )
+  test.beforeEach(async ({ loginPage, inventoryPage }) => {
+    await test.step('User logs in with valid credentials', async () => {
+      await loginPage.login(
+        users.standard.username,
+        users.standard.password
+      )
+    })
+
+    await test.step('User is on Products page', async () => {
+      await inventoryPage.verifyOnInventoryPage()
+    })
   })
 
-  await test.step('User is on Product page', async () => {
-    // On product page
-    await inventoryPage.verifyOnInventoryPage()
+  test('Cart - user can add one product and remove it', async ({
+    inventoryPage,
+    cartPage
+  }) => {
+
+    const product = products.backpack
+
+    await test.step('User adds a product to cart', async () => {
+      await inventoryPage.addProductToCart(product)
+    })
+
+    await test.step('User opens cart page', async () => {
+      await inventoryPage.openCart()
+    })
+
+    await test.step('User removes the product from the cart', async () => {
+      await cartPage.removeItem(product)
+    })
+
+    await test.step('User should see cart is empty', async () => {
+      const isEmpty = await cartPage.isCartEmpty()
+      expect(isEmpty).toBe(true)
+    })
+
   })
 
-  await test.step('User adds a product to cart', async () => {
-    // Add product
-    await inventoryPage.addProductToCart(productName)
-  })
+  test('Cart - user can add multiple products and remove multiple products', async ({
+    inventoryPage,
+    cartPage
+  }) => {
 
-  await test.step('User clicks on cart icon', async () => {
-    // Open cart
-    await inventoryPage.openCart()
-  })
+    const addedProducts = [
+      products.backpack,
+      products.light,
+      products.jacket
+    ]
 
-  await test.step('User should see the selected product in the cart', async () => {
-    // Verify product in cart
-    const item = await cartPage.getItemByName(productName)
-    await expect(item).toBeVisible()
-  })
+    const removedProducts = [
+      products.light,
+      products.jacket
+    ]
 
-  await test.step('User removes the product in the cart', async () => {
-    // Remove product
-    await cartPage.removeItem(productName)
-  })
+    await test.step('User adds multiple products to cart', async () => {
+      for (const product of addedProducts) {
+        await inventoryPage.addProductToCart(product)
+      }
+    })
 
-  await test.step('User sees cart badge count is empty', async () => {
-    // Verify cart empty
-    const isEmpty = await cartPage.isCartEmpty()
-    expect(isEmpty).toBe(true)
+    await test.step('User opens cart page', async () => {
+      await inventoryPage.openCart()
+    })
+
+    await test.step('User removes multiple products from the cart', async () => {
+      for (const product of removedProducts) {
+        await cartPage.removeItem(product)
+      }
+    })
+
+    await test.step('User should see remaining product in the cart', async () => {
+      const remainingProduct = products.backpack
+      const item = await cartPage.getItemByName(remainingProduct)
+      await expect(item).toBeVisible()
+    })
+
   })
 
 })
-
