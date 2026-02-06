@@ -26,7 +26,7 @@ export class InventoryPage{
 
     async getCartCount() {
         await this.cartBadge.waitFor({ state: 'visible' })
-        return this.cartBadge.textContent()
+        return Number(await this.cartBadge.textContent())
     }
 
     async openCart() {

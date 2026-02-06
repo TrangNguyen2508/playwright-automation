@@ -2,19 +2,29 @@ import { test, expect } from '../base/base-test'
 import { users } from '../data/users'
 import { products } from '../data/products'
 
-test('Add product to cart', async ({ loginPage, inventoryPage }) => {
-    await loginPage.login(
-        users.standard.username,
-        users.standard.password
-    )
+test('Add to cart - product is added successfully', async ({ loginPage, inventoryPage }) => {
 
-    // Inventory
-    await inventoryPage.verifyOnInventoryPage()
+    await test.step('User logs in with valid credentials', async () => {
+        await loginPage.login(
+            users.standard.username,
+            users.standard.password
+        )
+    })
 
-    // Add product
-    await inventoryPage.addProductToCart(products.backpack)
+    await test.step('User is redirected to Products page', async () => {
+        // Inventory
+        await inventoryPage.verifyOnInventoryPage()
+    })
 
-    // Verify car badge
-    const count = await inventoryPage.getCartCount()
-    expect(count).toBe('1')
+    await test.step('User adds a product to cart', async () => {
+        // Add product
+        await inventoryPage.addProductToCart(products.backpack)
+    })
+
+    await test.step('User should see cart badge count is 1', async () => {
+        // Verify car badge
+        const count = await inventoryPage.getCartCount()
+        expect(count).toBe(1)
+    })
+
 })
