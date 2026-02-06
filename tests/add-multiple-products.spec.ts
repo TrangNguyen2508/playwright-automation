@@ -8,21 +8,23 @@ test('Cart - user can add multiple products to cart', async ({
     inventoryPage,
     cartPage
 }) => {
+
     const selectedProducts = [
         products.backpack,
         products.light,
         products.jacket
 
     ]
+    
     await test.step('User logs in with valid credentials', async () => {
-        loginPage.login(
+        await loginPage.login(
             users.standard.username,
             users.standard.password
         )
     })
 
-    await test.step('User is on Product page', async () => {
-        inventoryPage.verifyOnInventoryPage()
+    await test.step('User is on Products page', async () => {
+        await inventoryPage.verifyOnInventoryPage()
     })
 
     await test.step('User adds multiple products to cart', async () => {
@@ -31,7 +33,7 @@ test('Cart - user can add multiple products to cart', async ({
         }
     })
 
-    await test.step('User should see cart badge count equls number of added product', async () => {
+    await test.step('User should see cart badge count equals number of added products', async () => {
         const count = await inventoryPage.getCartCount()
         expect(count).toBe(selectedProducts.length)
     })
